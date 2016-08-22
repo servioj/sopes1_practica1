@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  //ventana modal donde mostraremos los mensajes de error
+  #myModal.modal.fade(tabindex="-1",role="dialog",aria-labelledby="myModalLabel",aria-hidden="true")
+    .modal-header
+      h2.title-modal
+      hr
+      .modal-body
+        p.messageModal
+      .modal-footer
+        a.btn.btn-danger(data-dismiss="modal",aria-hidden="true") Cerrar
+  #login-form.well.span6.offset3                      
+    form.form-horizontal()#loginSubmit.well.span5
+      h1 Inicio de Sesion
+      h6.subheading Inicia sesión con tu cuenta
+      hr
+      div.control-group
+        label.control-label(for='username') Nombre de usuario
+        div.controls
+          input(id="username" name="username",type="text",placeholder="Escribe un nombre de usuario",required).span3.username
+      div.control-group
+        label.control-label(for="password") Escribe un Password
+        div.controls
+          input(id="password" name="password",type="password",placeholder="Escribe un password",required).span3.password
+      div.control-group
+        hr
+        //label.control-label(for="singlebutton")
+        div.controls
+          button.btn.btn-large.btn-block.btn-primary() 
+            i.icon-lock.icon-white
+            |  Iniciar sesión

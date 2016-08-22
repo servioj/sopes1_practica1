@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  script(src="/socket.io/socket.io.js")
+  script(src="/javascripts/comunicacion.js")
+  .navbar.navbar-inverse.navbar-fixed-top
+    .navbar-inner
+      .container
+  .well.span7.offset2  
+    h1 Inicio de sesión correcto 
+    hr
+    h4 Bienvenido a la aplicación #{username}
+    form.form-horizontal()#loginSubmit.well.span5
+      div.control-group
+        label.control-label(for='totalprocesos') Total de Procesos
+        div.controls
+          input(id="totalprocesos" name="totalprocesos",type="text",placeholder="obteniendo iformacion...",required).span3.totalprocesos
+      div.control-group
+        label.control-label(for="ejecutandose") Procesos en Ejecucion
+        div.controls
+          input(id="ejecutandose" name="ejecutandose",type="text",placeholder="obteniendo informacion...",required).span3.ejecutandose
+      div.control-group
+        label.control-label(for="suspendidos") Procesos Suspendidos
+        div.controls
+          input(id="suspendidos" name="suspendidos",type="text",placeholder="obteniendo informacion...",required).span3.suspendidos
+      div.control-group
+        label.control-label(for="detenidos") Procesos Detenidos
+        div.controls
+          input(id="detenidos" name="detenidos",type="text",placeholder="obteniendo informacion...",required).span3.detenidos
+      div.control-group
+        label.control-label(for="zombie") Procesos Zombie
+        div.controls
+          input(id="zombie" name="zombie",type="text",placeholder="obteniendo informacion...",required).span3.zombie
+    a.btn.btn-danger(href="logout") Cerrar Sesión

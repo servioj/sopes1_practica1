@@ -1,0 +1,22 @@
+body {
+	padding: 70px 0px;
+	background: #f5f5f5;
+}
+#login-form{
+	background: #2A3041;
+	padding-top: 40px;
+	margin-top: 40px;
+}
+#caja-login {
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	margin-top: 20px;
+}
+input[type=text],input[type=password]
+{
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	padding: 8px;
+}
