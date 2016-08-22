@@ -41,6 +41,11 @@ socket.on('zombie',function (data) {
 });
 //}
 
+socket.on('porcentajeRAM',function (data) {
+    console.log(data.msg);
+    document.getElementById("porcentajeRAM").value=data.msg;
+});
+
 function accion() {
     //console.log("intervalo");
     socket.emit('peticioncliente');
@@ -48,5 +53,5 @@ function accion() {
     socket.emit('peticionSuspendidos');
     socket.emit('peticionDetenidos');
     socket.emit('peticionZombie');
-    
+    socket.emit('peticionPorcentajeRAM');
 }

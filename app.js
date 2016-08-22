@@ -66,6 +66,10 @@ var server=http.createServer(app);
          procZombie=0;
      });
 
+     sockt.on('peticionPorcentajeRAM',function (sop) {
+         io.sockets.emit('porcentajeRAM',{msg:porcentaeRAM});
+     });
+
      sockt.emit('init',{msg:"test"});
  });
 
@@ -94,6 +98,7 @@ var server=http.createServer(app);
  var noDefinido=0;
  var noDefineUlt="ninguno";
  var procesosJSON='{ "procesos" : ['+'{"nombre":"ejemplo" ,ram":"ejemplo", "estado":"ejemplo", "usuario":"ubuntu", "PID":1 }';
+ var porcentaeRAM=1.00;
 
  function procesosEjecutandose() {
      var fs = require("fs"),
@@ -134,7 +139,7 @@ var server=http.createServer(app);
                      }
                      guardarInfoProceso(data,path.basename(file));
                      procesosJSON=procesosJSON+']}';
-                     //console.log(procesosJSON);
+                     console.log(procesosJSON);
                      //console.log("------"+data.substring(inicio,inicio+2));
                  }
              });
@@ -144,6 +149,7 @@ var server=http.createServer(app);
      });
      //console.log("---------------"+procesosEjecutandosee+"-----------------------");
      //console.log("runin="+procRunning+" suspendi="+procSuspend+" zombie="+procZombie+" detenido="+procDetenido+" noDefinido="+noDefinido);
+     porcentajeUtilizacionRAM();
  }
 
 
@@ -168,4 +174,22 @@ var server=http.createServer(app);
      var estado=dato.substring(dato.indexOf("State:")+7,dato.indexOf("Tgid:"));
      var proce=',{"nombre":'+nombre+', "ram":'+ram+', "estado":'+estado+', "usuario":"ubuntu", "PID":'+pid+' }';
      procesosJSON=procesosJSON+proce;
+ }
+
+ function porcentajeUtilizacionRAM() {
+     var fs = require('fs');
+     fs.readFile('/proc/meminfo', 'utf8', function(err, data) {
+         if( err ){
+             console.log(err)
+         }
+         else{
+             var memTotal=data.substring(data.indexOf("MemTotal:")+10,data.indexOf("MemFree:"));
+             var memDisponible=data.substring(data.indexOf("MemAvailable:")+14,data.indexOf("Buffers:"));
+             memTotal=memTotal.substring(0,memTotal.indexOf("kB"));
+             memDisponible=memDisponible.substring(0,memDisponible.indexOf("kB"));
+             var memUsada=memTotal-memDisponible;
+             porcentaeRAM=100.00*parseFloat(memUsada)/parseFloat(memTotal);
+             //console.log("------"+data.substring(inicio,inicio+4));
+         }
+     });
  }
