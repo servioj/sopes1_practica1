@@ -206,7 +206,10 @@ var server=http.createServer(app);
      var exec = require('child_process').exec, child;
 // Creamos la función y pasamos el string pwd
 // que será nuestro comando a ejecutar
-     child = exec('top -b -n1 | grep "Cpu(s)" | awk \'{print $2 + $4}\'',
+     //var commando='cat <(grep \'cpu \' /proc/stat) <(sleep 1 && grep \'cpu \' /proc/stat) | awk -v RS="" \'{print ($13-$2+$15-$4)*100/($13-$2+$15-$4+$16-$5)}\'';
+     var commando='top -b -n1 | grep "Cpu(s)" | awk \'{print $2 + $4}\'';
+     console.log(commando);
+     child = exec(commando,
 // Pasamos los parámetros error, stdout la salida
 // que mostrara el comando
          function (error, stdout, stderr) {
