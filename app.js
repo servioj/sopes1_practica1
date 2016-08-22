@@ -70,6 +70,10 @@ var server=http.createServer(app);
          io.sockets.emit('porcentajeRAM',{msg:porcentaeRAM});
      });
 
+     sockt.on('peticionPorcentajeCPU',function (sop) {
+         io.sockets.emit('porcentajeCPU',{msg:porcentaeCPU});
+     });
+
      sockt.emit('init',{msg:"test"});
  });
 
@@ -99,6 +103,7 @@ var server=http.createServer(app);
  var noDefineUlt="ninguno";
  var procesosJSON='{ "procesos" : ['+'{"nombre":"ejemplo" ,ram":"ejemplo", "estado":"ejemplo", "usuario":"ubuntu", "PID":1 }';
  var porcentaeRAM=1.00;
+ var porcentaeCPU=1.00;
 
  function procesosEjecutandose() {
      var fs = require("fs"),
@@ -139,7 +144,7 @@ var server=http.createServer(app);
                      }
                      guardarInfoProceso(data,path.basename(file));
                      procesosJSON=procesosJSON+']}';
-                     console.log(procesosJSON);
+                     //console.log(procesosJSON);
                      //console.log("------"+data.substring(inicio,inicio+2));
                  }
              });
@@ -150,6 +155,7 @@ var server=http.createServer(app);
      //console.log("---------------"+procesosEjecutandosee+"-----------------------");
      //console.log("runin="+procRunning+" suspendi="+procSuspend+" zombie="+procZombie+" detenido="+procDetenido+" noDefinido="+noDefinido);
      porcentajeUtilizacionRAM();
+     porcentajeCPU();
  }
 
 
@@ -192,4 +198,24 @@ var server=http.createServer(app);
              //console.log("------"+data.substring(inicio,inicio+4));
          }
      });
+ }
+ 
+ function porcentajeCPU() {
+     // Vamos a requerir del modulo que provee Node.js
+// llamado child_process
+     var exec = require('child_process').exec, child;
+// Creamos la función y pasamos el string pwd
+// que será nuestro comando a ejecutar
+     child = exec('top -b -n1 | grep "Cpu(s)" | awk \'{print $2 + $4}\'',
+// Pasamos los parámetros error, stdout la salida
+// que mostrara el comando
+         function (error, stdout, stderr) {
+             // Imprimimos en pantalla con console.log
+             //console.log(parseFloat(stdout));
+             porcentaeCPU=parseFloat(stdout);
+             // controlamos el error
+             if (error !== null) {
+                 console.log('exec error: ' + error);
+             }
+         });
  }
