@@ -1,7 +1,7 @@
 /**
  * Created by ubuntu on 20/08/16.
  */
-window.setInterval(accion,6000);
+window.setInterval(accion,4000);
 //window.onload=function () {
     console.log("adentro script");
     var socket = io.connect('http://127.0.0.1:5000');

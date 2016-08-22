@@ -31,4 +31,24 @@ block content
         label.control-label(for="zombie") Procesos Zombie
         div.controls
           input(id="zombie" name="zombie",type="text",placeholder="obteniendo informacion...",required).span3.zombie
+
+    hr2
+
+      form.form-horizontal()#CPUSubmit.well.span5
+        h4 Monitor del CPU
+        div.control-group
+          label.control-label(for='porcentajeCPU') Porcentaje de Utilizacion CPU
+          div.controls
+            input(id="porcentajeCPU" name="porcentajeCPU",type="text",placeholder="obteniendo iformacion...",required).span3.porcentajeCPU
+
+    hr3
+
+      form.form-horizontal()#RAMSubmit.well.span5
+        h5 Monitor de RAM
+        div.control-group
+          label.control-label(for='porcentajeRAM') Porcentaje de Utilizacion RAM
+          div.controls
+            input(id="porcentajeRAM" name="porcentajeRAM",type="text",placeholder="obteniendo iformacion...",required).span3.porcentajeCPU
+
+
     a.btn.btn-danger(href="logout") Cerrar Sesión

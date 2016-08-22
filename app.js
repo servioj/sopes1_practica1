@@ -98,7 +98,7 @@ var server=http.createServer(app);
  function procesosEjecutandose() {
      var fs = require("fs"),
          path = require("path");
-
+     procesosJSON='{ "procesos" : ['+'{"nombre":"ejemplo" ,ram":"ejemplo", "estado":"ejemplo", "usuario":"ubuntu", "PID":1 }';
      var p = "/proc";
      fs.readdir(p,function(err, files) {
          if (err) {
@@ -134,15 +134,16 @@ var server=http.createServer(app);
                      }
                      guardarInfoProceso(data,path.basename(file));
                      procesosJSON=procesosJSON+']}';
+                     //console.log(procesosJSON);
                      //console.log("------"+data.substring(inicio,inicio+2));
                  }
              });
-             console.log("%s (%s)(%s)(%s)", file, path.basename(file),path.extname(file),estadoUltimoProcesoLeido);  //imprime las carpetas
-             console.log("procesos Ejecutandose "+procesosEjecutandosee);
+             //console.log("%s (%s)(%s)(%s)", file, path.basename(file),path.extname(file),estadoUltimoProcesoLeido);  //imprime las carpetas
+             //console.log("procesos Ejecutandose "+procesosEjecutandosee);
          });
      });
-     console.log("---------------"+procesosEjecutandosee+"-----------------------");
-     console.log("runin="+procRunning+" suspendi="+procSuspend+" zombie="+procZombie+" detenido="+procDetenido+" noDefinido="+noDefinido);
+     //console.log("---------------"+procesosEjecutandosee+"-----------------------");
+     //console.log("runin="+procRunning+" suspendi="+procSuspend+" zombie="+procZombie+" detenido="+procDetenido+" noDefinido="+noDefinido);
  }
 
 
