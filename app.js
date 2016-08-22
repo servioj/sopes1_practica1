@@ -74,6 +74,17 @@ var server=http.createServer(app);
          io.sockets.emit('porcentajeCPU',{msg:porcentaeCPU});
      });
 
+     sockt.on('peticionDetalleProcesos',function (sop) {
+         procesosJSON=procesosJSON+']}';
+
+         var procesosJSON1=procesosJSON.replace("\n"," ");
+         var procesosJSON2=procesosJSON1.replace("\r"," ");
+         //var procesosJSON3=procesosJSON2.replace(/\s*[\r\n][\r\n \t]*/g," ");
+         var procesosJSON3=procesosJSON2.replace("\t"," ");
+         //console.log(procesosJSON3);
+         //io.sockets.emit('detalleProcesos',JSON.parse(procesosJSON3));
+     });
+
      sockt.emit('init',{msg:"test"});
  });
 
@@ -101,14 +112,14 @@ var server=http.createServer(app);
  var procDetenido=0;
  var noDefinido=0;
  var noDefineUlt="ninguno";
- var procesosJSON='{ "procesos" : ['+'{"nombre":"ejemplo" ,ram":"ejemplo", "estado":"ejemplo", "usuario":"ubuntu", "PID":1 }';
+ var procesosJSON='{ "procesos" : ['+'{"nombre":"ejemplo" ,"ram":"ejemplo", "estado":"ejemplo", "usuario":"ubuntu", "PID":1 }';
  var porcentaeRAM=1.00;
  var porcentaeCPU=1.00;
 
  function procesosEjecutandose() {
      var fs = require("fs"),
          path = require("path");
-     procesosJSON='{ "procesos" : ['+'{"nombre":"ejemplo" ,ram":"ejemplo", "estado":"ejemplo", "usuario":"ubuntu", "PID":1 }';
+     procesosJSON='{ "procesos" : ['+'{"nombre":"ejemplo" ,"ram":"ejemplo", "estado":"ejemplo", "usuario":"ubuntu", "PID":1 }';
      var p = "/proc";
      fs.readdir(p,function(err, files) {
          if (err) {
@@ -143,7 +154,6 @@ var server=http.createServer(app);
                          noDefinido=noDefinido+1;
                      }
                      guardarInfoProceso(data,path.basename(file));
-                     procesosJSON=procesosJSON+']}';
                      //console.log(procesosJSON);
                      //console.log("------"+data.substring(inicio,inicio+2));
                  }
@@ -154,6 +164,7 @@ var server=http.createServer(app);
      });
      //console.log("---------------"+procesosEjecutandosee+"-----------------------");
      //console.log("runin="+procRunning+" suspendi="+procSuspend+" zombie="+procZombie+" detenido="+procDetenido+" noDefinido="+noDefinido);
+     //procesosJSON=procesosJSON+']}';
      porcentajeUtilizacionRAM();
      porcentajeCPU();
  }
@@ -178,7 +189,7 @@ var server=http.createServer(app);
      var nombre=dato.substring(dato.indexOf("Name:")+6,dato.indexOf("State:"));
      var ram=dato.substring(dato.indexOf("VmData:")+8,dato.indexOf("VmStk:"));
      var estado=dato.substring(dato.indexOf("State:")+7,dato.indexOf("Tgid:"));
-     var proce=',{"nombre":'+nombre+', "ram":'+ram+', "estado":'+estado+', "usuario":"ubuntu", "PID":'+pid+' }';
+     var proce=',{"nombre":"'+nombre+'", "ram":"'+ram+'", "estado":"'+estado+'", "usuario":"ubuntu", "PID":'+pid+' }';
      procesosJSON=procesosJSON+proce;
  }
 

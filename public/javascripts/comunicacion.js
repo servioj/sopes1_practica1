@@ -51,6 +51,11 @@ socket.on('porcentajeCPU',function (data) {
     document.getElementById("porcentajeCPU").value=data.msg;
 });
 
+socket.on('detalleProcesos',function (data) {
+    console.log(data.procesos[1].nombre);
+    //document.getElementById("porcentajeCPU").value=data.msg;
+});
+
 function accion() {
     //console.log("intervalo");
     socket.emit('peticioncliente');
@@ -60,4 +65,5 @@ function accion() {
     socket.emit('peticionZombie');
     socket.emit('peticionPorcentajeRAM');
     socket.emit('peticionPorcentajeCPU');
+    socket.emit('peticionDetalleProcesos');
 }
