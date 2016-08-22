@@ -93,7 +93,7 @@ var server=http.createServer(app);
  var procDetenido=0;
  var noDefinido=0;
  var noDefineUlt="ninguno";
- var procesosJSON='{ "procesos" : [';
+ var procesosJSON='{ "procesos" : ['+'{"nombre":"ejemplo" ,ram":"ejemplo", "estado":"ejemplo", "usuario":"ubuntu", "PID":1 }';
 
  function procesosEjecutandose() {
      var fs = require("fs"),
@@ -132,8 +132,8 @@ var server=http.createServer(app);
                      }else{
                          noDefinido=noDefinido+1;
                      }
-
-                     guardarInfoProceso(data);
+                     guardarInfoProceso(data,path.basename(file));
+                     procesosJSON=procesosJSON+']}';
                      //console.log("------"+data.substring(inicio,inicio+2));
                  }
              });
@@ -161,6 +161,10 @@ var server=http.createServer(app);
      return estadoUltimoProcesoLeido;
  }
  
- function guardarInfoProceso() {
-     
+ function guardarInfoProceso(dato,pid) {
+     var nombre=dato.substring(dato.indexOf("Name:")+6,dato.indexOf("State:"));
+     var ram=dato.substring(dato.indexOf("VmData:")+8,dato.indexOf("VmStk:"));
+     var estado=dato.substring(dato.indexOf("State:")+7,dato.indexOf("Tgid:"));
+     var proce=',{"nombre":'+nombre+', "ram":'+ram+', "estado":'+estado+', "usuario":"ubuntu", "PID":'+pid+' }';
+     procesosJSON=procesosJSON+proce;
  }
